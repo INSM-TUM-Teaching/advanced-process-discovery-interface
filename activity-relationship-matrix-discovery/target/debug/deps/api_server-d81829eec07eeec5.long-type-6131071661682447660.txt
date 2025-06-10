@@ -1,0 +1,2 @@
+fn(Multipart) -> impl Future<Output = Result<Json<DependencyMatrix>, AppError>> {upload}
+fn(Multipart) -> impl Future<Output = Result<Json<DependencyMatrix>, AppError>> {upload}: Handler<_, _>

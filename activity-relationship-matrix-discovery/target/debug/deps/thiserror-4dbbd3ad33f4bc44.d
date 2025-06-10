@@ -1,0 +1,10 @@
+/home/tiagogiraldez/Documents/thesis/apd-interface/activity-relationship-matrix-discovery/target/debug/deps/libthiserror-4dbbd3ad33f4bc44.rmeta: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/aserror.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/display.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/var.rs
+
+/home/tiagogiraldez/Documents/thesis/apd-interface/activity-relationship-matrix-discovery/target/debug/deps/libthiserror-4dbbd3ad33f4bc44.rlib: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/aserror.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/display.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/var.rs
+
+/home/tiagogiraldez/Documents/thesis/apd-interface/activity-relationship-matrix-discovery/target/debug/deps/thiserror-4dbbd3ad33f4bc44.d: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/aserror.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/display.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/var.rs
+
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/lib.rs:
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/aserror.rs:
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/display.rs:
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.12/src/var.rs:

@@ -1,0 +1,10 @@
+/home/tiagogiraldez/Documents/thesis/apd-interface/activity-relationship-matrix-discovery/target/debug/deps/libgloo_utils-7cfec54da4d86fee.rmeta: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/errors.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/iter.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/format/json.rs
+
+/home/tiagogiraldez/Documents/thesis/apd-interface/activity-relationship-matrix-discovery/target/debug/deps/libgloo_utils-7cfec54da4d86fee.rlib: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/errors.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/iter.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/format/json.rs
+
+/home/tiagogiraldez/Documents/thesis/apd-interface/activity-relationship-matrix-discovery/target/debug/deps/gloo_utils-7cfec54da4d86fee.d: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/errors.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/iter.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/format/json.rs
+
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/lib.rs:
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/errors.rs:
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/iter.rs:
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/gloo-utils-0.1.7/src/format/json.rs:
