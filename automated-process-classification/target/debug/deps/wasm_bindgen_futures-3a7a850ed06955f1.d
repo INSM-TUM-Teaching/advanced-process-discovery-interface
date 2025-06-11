@@ -1,0 +1,9 @@
+/home/tiagogiraldez/Documents/thesis/apd-interface/automated-process-classification/target/debug/deps/libwasm_bindgen_futures-3a7a850ed06955f1.rmeta: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/queue.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/task/singlethread.rs
+
+/home/tiagogiraldez/Documents/thesis/apd-interface/automated-process-classification/target/debug/deps/libwasm_bindgen_futures-3a7a850ed06955f1.rlib: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/queue.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/task/singlethread.rs
+
+/home/tiagogiraldez/Documents/thesis/apd-interface/automated-process-classification/target/debug/deps/wasm_bindgen_futures-3a7a850ed06955f1.d: /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/lib.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/queue.rs /home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/task/singlethread.rs
+
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/lib.rs:
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/queue.rs:
+/home/tiagogiraldez/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.50/src/task/singlethread.rs:
