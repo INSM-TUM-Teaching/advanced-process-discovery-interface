@@ -7,6 +7,7 @@ import { fetchClassification, fetchClassificationFromMatrix } from '@/services/c
 import Classification from '../Classification';
 import { downloadYAML } from '@/services/matrix-yaml';
 import type { Matrix, Thresholds } from '@/types/matrix-types';
+import ModelStepSelector from '@/components/ModelStepSelector';
 
 
 const RunProject: React.FC = () => {
@@ -139,7 +140,11 @@ const RunProject: React.FC = () => {
               )
             )}
             {step === 'model' && (
-              <p className="text-gray-400 italic">Step "{step}" not implemented yet.</p>
+              classificationResults[i] ? (
+                <ModelStepSelector classificationResult={classificationResults[i]} onContinue={() => console.log("Test")}></ModelStepSelector>
+              ) : (
+                <p className="text-gray-400 italic">Step "{step}" not implemented yet.</p>
+              )
             )}
           </div>
         ))}

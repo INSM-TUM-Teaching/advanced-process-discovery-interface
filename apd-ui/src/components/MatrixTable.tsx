@@ -30,42 +30,42 @@ const getInterpretation = (dependency: Dependency | undefined): any => {
     let temporal_explanation;
 
     if (temporal_dependency.type == "Direct")
-        temporal_explanation = `There is a direct temporal dependency. Thus, a termination of ${temporal_dependency.direction == "Forward" ? dependency.from : dependency.to
-            } directly leads to the enablement of ${temporal_dependency.direction == "Forward" ? dependency.to : dependency.from
+        temporal_explanation = `There is a direct temporal dependency. Thus, a termination of ${temporal_dependency.direction == "Forward" ? dependency.from.toUpperCase() : dependency.to.toUpperCase()
+            } directly leads to the enablement of ${temporal_dependency.direction == "Forward" ? dependency.to.toUpperCase() : dependency.from.toUpperCase()
             }.`;
 
     if (temporal_dependency.type == "Eventual") {
-        temporal_explanation = `There is an eventual temporal dependency. Thus, ${temporal_dependency.direction == "Forward" ? dependency.to : dependency.from
-            } eventually follows ${temporal_dependency.direction == "Forward" ? dependency.from : dependency.to
-            } meaning that there may be other activities before ${temporal_dependency.direction == "Forward" ? dependency.to : dependency.from
+        temporal_explanation = `There is an eventual temporal dependency. Thus, ${temporal_dependency.direction == "Forward" ? dependency.to.toUpperCase() : dependency.from.toUpperCase()
+            } eventually follows ${temporal_dependency.direction == "Forward" ? dependency.from.toUpperCase() : dependency.to.toUpperCase()
+            } meaning that there may be other activities before ${temporal_dependency.direction == "Forward" ? dependency.to.toUpperCase() : dependency.from.toUpperCase()
             } begins.`
     }
 
     switch (existential_dependency.type) {
         case "Implication":
-            existential_explanation = `There is an implication. Thus, whenever ${existential_dependency.direction == "Forward" ? dependency.from : dependency.to
-                } happens ${existential_dependency.direction == "Forward" ? dependency.to : dependency.from
+            existential_explanation = `There is an implication. Thus, whenever ${existential_dependency.direction == "Forward" ? dependency.from.toString().toUpperCase() : dependency.to.toUpperCase()
+                } happens ${existential_dependency.direction == "Forward" ? dependency.to.toUpperCase() : dependency.from.toUpperCase()
                 } must happen or must have happened.`
             break;
         case "Equivalence":
-            existential_explanation = `There is an equivalence. Thus, iff ${existential_dependency.direction == "Forward" ? dependency.from : dependency.to
-                } ⇒ ${existential_dependency.direction == "Forward" ? dependency.to : dependency.from
-                } and ${existential_dependency.direction == "Forward" ? dependency.to : dependency.from
-                } ⇒ ${existential_dependency.direction == "Forward" ? dependency.from : dependency.to
+            existential_explanation = `There is an equivalence. Thus, iff ${existential_dependency.direction == "Forward" ? dependency.from.toUpperCase() : dependency.to.toUpperCase()
+                } ⇒ ${existential_dependency.direction == "Forward" ? dependency.to.toUpperCase() : dependency.from.toUpperCase()
+                } and ${existential_dependency.direction == "Forward" ? dependency.to.toUpperCase() : dependency.from.toUpperCase()
+                } ⇒ ${existential_dependency.direction == "Forward" ? dependency.from.toUpperCase() : dependency.to.toUpperCase()
                 }.`
             break;
         case "NegatedEquivalence":
-            existential_explanation = `There is a negated equivalence. Thus, either ${dependency.from
-                } or ${dependency.to
+            existential_explanation = `There is a negated equivalence. Thus, either ${dependency.from.toUpperCase()
+                } or ${dependency.to.toUpperCase()
                 } occurs.`
             break;
         case "Nand":
-            existential_explanation = `There is a NAND (negated and). Thus, neither ${dependency.from
-                } nor ${dependency.to
+            existential_explanation = `There is a NAND (negated and). Thus, neither ${dependency.from.toUpperCase()
+                } nor ${dependency.to.toUpperCase()
                 } occurs.`
             break;
         case "Or":
-            existential_explanation = `There is an OR. Thus, at least one of the two activities (${dependency.from},${dependency.to}) must occur.`
+            existential_explanation = `There is an OR. Thus, at least one of the two activities (${dependency.from.toUpperCase()},${dependency.to.toUpperCase()}) must occur.`
             break;
 
     }
