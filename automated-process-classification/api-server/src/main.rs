@@ -2,17 +2,23 @@ use axum::{
     extract::Multipart,
     routing::post,
     Json, Router,
+    http::StatusCode
 };
 use tower_http::cors::{CorsLayer, Any};
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use std::net::SocketAddr;
 use tokio::net::TcpListener;
-use core::process_xes_classification;
+use core::{process_xes_classification, process_matrix_classification, MatrixRust};
 
 #[derive(Deserialize)]
 struct Thresholds {
     existential_threshold: f64,
     temporal_threshold: f64,
+}
+
+#[derive(Serialize)]
+struct ErrorResponse {
+    error: String,
 }
 
 async fn upload(mut multipart: Multipart) -> Result<Json<String>, String> {
@@ -47,6 +53,18 @@ async fn upload(mut multipart: Multipart) -> Result<Json<String>, String> {
     }
 }
 
+async fn classify_matrix(Json(payload): Json<MatrixRust>) -> Result<Json<String>, (StatusCode, Json<ErrorResponse>)> {
+    match process_matrix_classification(payload) {
+        Ok(result) => Ok(Json(result)),
+        Err(e) => Err((
+            StatusCode::UNPROCESSABLE_ENTITY,
+            Json(ErrorResponse {
+                error: format!("Processing error: {}", e),
+            }),
+        )),
+    }
+}
+
 #[tokio::main]
 async fn main() {
     
@@ -55,7 +73,10 @@ async fn main() {
     .allow_methods(Any)
     .allow_headers(Any);
     
-    let app = Router::new().route("/algo", post(upload)).layer(cors);
+    let app = Router::new()
+        .route("/algo", post(upload))
+        .route("/algo/matrix", post(classify_matrix))
+        .layer(cors);
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 8082));
     println!("Listening on {}", addr);

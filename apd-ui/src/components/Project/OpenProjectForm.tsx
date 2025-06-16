@@ -53,6 +53,7 @@ const OpenProjectForm: React.FC = () => {
       endpoints: [{ activity: "",  structure: endpoint}],
       matrix: pendingMatrix,
       modelsCount: 1,
+      thresholds: [{existential_threshold: 1, temporal_threshold: 1}]
     });
     navigate('/project/run');
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import type { Matrix, Dependency, MatrixTableProps } from "@/types/matrix-types.tsx";
+import type { Dependency, MatrixTableProps } from "@/types/matrix-types.tsx";
 import { HelpCircleIcon } from "lucide-react";
 
 const existentialSymbols: Record<string, string> = {
@@ -43,54 +43,40 @@ const getInterpretation = (dependency: Dependency | undefined): any => {
 
     switch (existential_dependency.type) {
         case "Implication":
-            existential_explanation = `The existential dependency is an implication. Thus, whenever ${existential_dependency.direction == "Forward" ? dependency.from : dependency.to
+            existential_explanation = `There is an implication. Thus, whenever ${existential_dependency.direction == "Forward" ? dependency.from : dependency.to
                 } happens ${existential_dependency.direction == "Forward" ? dependency.to : dependency.from
                 } must happen or must have happened.`
             break;
         case "Equivalence":
-            existential_explanation = `The existential dependency is an equivalence. Thus, iff ${existential_dependency.direction == "Forward" ? dependency.from : dependency.to
+            existential_explanation = `There is an equivalence. Thus, iff ${existential_dependency.direction == "Forward" ? dependency.from : dependency.to
                 } ⇒ ${existential_dependency.direction == "Forward" ? dependency.to : dependency.from
                 } and ${existential_dependency.direction == "Forward" ? dependency.to : dependency.from
                 } ⇒ ${existential_dependency.direction == "Forward" ? dependency.from : dependency.to
                 }.`
             break;
         case "NegatedEquivalence":
-            existential_explanation = `The existential dependency is a negated equivalence. Thus, either ${dependency.from
+            existential_explanation = `There is a negated equivalence. Thus, either ${dependency.from
                 } or ${dependency.to
                 } occurs.`
             break;
         case "Nand":
-            existential_explanation = `The existential dependency is a NAND (negated and). Thus, neither ${dependency.from
+            existential_explanation = `There is a NAND (negated and). Thus, neither ${dependency.from
                 } nor ${dependency.to
                 } occurs.`
             break;
         case "Or":
-            existential_explanation = `The existential dependency is an OR. Thus, at least one of the two activities (${dependency.from},${dependency.to}) must occur.`
+            existential_explanation = `There is an OR. Thus, at least one of the two activities (${dependency.from},${dependency.to}) must occur.`
             break;
 
     }
 
     return (
         <>
-            <p>
-                The relationship between <strong>{dependency.from}</strong> and <strong>{dependency.to}</strong> is expressed through a tuple (temporal dependency, existential dependency).
-            </p>
             <p className="mt-2">
                 {temporal_explanation}
             </p>
             <p className="mt-2">
                 {existential_explanation}
-            </p>
-            <p className="mt-4">
-                For more information you can read the following paper:{" "}
-                <a
-                    href="https://link.springer.com/article/10.1007/s10270-024-01234-5"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline"
-                >
-                    https://link.springer.com/article/10.1007/s10270-024-01234-5
-                </a>
             </p>
         </>
     );

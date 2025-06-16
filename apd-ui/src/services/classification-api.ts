@@ -1,4 +1,13 @@
-import type { Thresholds } from "@/types/matrix-types";
+import type { Matrix, MatrixRust, Thresholds } from "@/types/matrix-types";
+
+function toInputMatrix(matrix: Matrix): MatrixRust {
+    return {
+        dependencies: matrix.dependencies.map(dep => ({
+            key: [dep.from, dep.to],
+            value: dep,
+        })),
+    };
+}
 
 export async function fetchClassification(url: URL, file: File, thresholds: Thresholds): Promise<string> {
     const formData = new FormData();
@@ -15,6 +24,26 @@ export async function fetchClassification(url: URL, file: File, thresholds: Thre
         const errorText = response.body;
         throw new Error(`Failed to fetch classification ${errorText}`);
     }
+
+    const classification: string = await response.json();
+    return classification;
+}
+
+export async function fetchClassificationFromMatrix(url: URL, matrix: Matrix) {
+    const rustMatrix: MatrixRust = toInputMatrix(matrix);
+    
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rustMatrix)
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Unknown error");
+      }
 
     const classification: string = await response.json();
     return classification;

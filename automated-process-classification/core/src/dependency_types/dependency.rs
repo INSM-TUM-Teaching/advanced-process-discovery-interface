@@ -1,7 +1,8 @@
 use crate::dependency_types::existential::ExistentialDependency;
 use crate::dependency_types::temporal::TemporalDependency;
+use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct Dependency {
     pub from: String,
     pub to: String,

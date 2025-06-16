@@ -1,6 +1,7 @@
 use std::cmp::Ordering;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct TemporalDependency {
     pub from: String,
     pub to: String,
@@ -37,13 +38,14 @@ impl std::fmt::Display for TemporalDependency {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Copy)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Copy, Serialize, Deserialize)]
 pub enum Direction {
     Forward,
     Backward,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Copy)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Copy, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
 pub enum DependencyType {
     Direct,
     Eventual,

@@ -3,10 +3,10 @@ import { useProjectStore } from '@/hooks/useProjectStore';
 import MatrixTable from '@/components/MatrixTable';
 import { fetchMatrix } from '@/services/matrix-api';
 import type { Step } from '@/types/project-types';
-import { fetchClassification } from '@/services/classification-api';
+import { fetchClassification, fetchClassificationFromMatrix } from '@/services/classification-api';
 import Classification from '../Classification';
 import { downloadYAML } from '@/services/matrix-yaml';
-import type { Thresholds } from '@/types/matrix-types';
+import type { Matrix, Thresholds } from '@/types/matrix-types';
 
 
 const RunProject: React.FC = () => {
@@ -26,8 +26,14 @@ const RunProject: React.FC = () => {
   useEffect(() => {
     if (!project) return;
 
+    const fetchClassificationFromMatrixResult = async (matrix: Matrix) => {
+      const results = await fetchClassificationFromMatrix(new URL(project.endpoints[0].structure+"/matrix"), matrix);
+      setClassificationResults([results]);
+    }
+
     if (project.matrix) {
       setMatrixResults([project.matrix]);
+      fetchClassificationFromMatrixResult(project.matrix);
       return;
     }
 
@@ -46,7 +52,6 @@ const RunProject: React.FC = () => {
       if (!project) return;
       const results = await Promise.all(
         project.logs.map((log, i) => {
-          console.log(project.endpoints[i]);
           const endpoint = project.compare ? project.endpoints[i]?.structure : project.endpoints[0]?.structure
           if (!log || !endpoint) return null;
           return fetchClassification(new URL(endpoint), log.log, project.thresholds[i]);
@@ -128,7 +133,7 @@ const RunProject: React.FC = () => {
             )}
             {step === 'classification' && (
               classificationResults[i] ? (
-                <Classification result={classificationResults[i]}></Classification>
+                <Classification result={classificationResults[i]} failedRule="ss1"></Classification>
               ) : (
                 <p className="text-gray-500">Loading classification...</p>
               )

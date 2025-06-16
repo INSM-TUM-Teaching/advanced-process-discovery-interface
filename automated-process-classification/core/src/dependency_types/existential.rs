@@ -1,4 +1,6 @@
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+use serde::{Serialize, Deserialize};
+
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub struct ExistentialDependency {
     pub from: String,
     pub to: String,
@@ -38,7 +40,8 @@ impl std::fmt::Display for ExistentialDependency {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Copy)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Copy, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
 pub enum Direction {
     Forward,
     Backward,
@@ -46,7 +49,8 @@ pub enum Direction {
 }
 
 #[allow(dead_code)]
-#[derive(PartialEq, Eq, Debug, Clone, PartialOrd, Ord, Copy)]
+#[derive(PartialEq, Eq, Debug, Clone, PartialOrd, Ord, Copy, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
 pub enum DependencyType {
     Implication,
     Equivalence,

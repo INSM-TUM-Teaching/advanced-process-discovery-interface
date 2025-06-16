@@ -15,6 +15,13 @@ export type Matrix = {
     dependencies: Dependency[]
 }
 
+export type MatrixRust = {
+    dependencies: {
+        key: [string, string],
+        value: Dependency
+    }[],
+}
+
 export type Thresholds = {
     existential_threshold: number,
     temporal_threshold: number
