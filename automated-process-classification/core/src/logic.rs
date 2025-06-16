@@ -3,23 +3,27 @@ use crate::AppError;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use crate::dependency_types::dependency::Dependency;
+use crate::dependency_types::dependency::IncomingDependency;
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct DependencyEntry {
+#[derive(Debug, Deserialize)]
+pub struct IncomingDependencyEntry {
     pub key: (String, String),
-    pub value: Dependency,
+    pub value: IncomingDependency,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct MatrixRust {
-    pub dependencies: Vec<DependencyEntry>,
+#[derive(Debug, Deserialize)]
+pub struct MatrixRustIncoming {
+    pub dependencies: Vec<IncomingDependencyEntry>,
 }
 
-fn to_input_matrix(dto: MatrixRust) -> InputMatrix {
+fn to_input_matrix(dto: MatrixRustIncoming) -> Result<InputMatrix, AppError> {
     dto.dependencies
         .into_iter()
-        .map(|entry| (entry.key, entry.value))
-        .collect::<HashMap<_, _>>()
+        .map(|entry| {
+            let value = entry.value.try_into()?;
+            Ok((entry.key, value))
+        })
+        .collect()
 }
 
 pub fn process_xes_classification(content: &str, existential_threshold: f64, temporal_threshold: f64) -> Result<String, AppError> {
@@ -40,8 +44,8 @@ pub fn process_xes_classification(content: &str, existential_threshold: f64, tem
     Ok(classification_result.to_string())
 }
 
-pub fn process_matrix_classification(matrix_react: MatrixRust) -> Result<String, AppError> {
-    let matrix = to_input_matrix(matrix_react);
+pub fn process_matrix_classification(matrix_react: MatrixRustIncoming) -> Result<String, AppError> {
+    let matrix = to_input_matrix(matrix_react)?;
     let classification_result = classify_matrix(&matrix);
     Ok(classification_result.to_string())
 }

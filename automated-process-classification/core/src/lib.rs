@@ -13,4 +13,4 @@ pub use error::{AppError};
 pub use logic::process_xes_classification;
 pub use logic::process_matrix_classification;
 pub use dependency_types::dependency::Dependency;
-pub use logic::MatrixRust;
+pub use logic::MatrixRustIncoming;

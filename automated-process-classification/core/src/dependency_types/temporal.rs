@@ -39,6 +39,7 @@ impl std::fmt::Display for TemporalDependency {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Copy, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
 pub enum Direction {
     Forward,
     Backward,

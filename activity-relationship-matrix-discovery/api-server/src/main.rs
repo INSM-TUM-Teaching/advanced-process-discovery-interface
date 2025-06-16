@@ -56,7 +56,9 @@ async fn main() {
     .allow_methods(Any)
     .allow_headers(Any);
     
-    let app = Router::new().route("/algo", post(upload)).layer(cors);
+    let app = Router::new()
+        .route("/algo", post(upload))
+        .layer(cors);
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 8081));
     println!("Listening on {}", addr);

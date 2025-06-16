@@ -6,4 +6,6 @@ pub enum AppError {
     XesParseError(String),
     #[error("Classification error: {0}")]
     ClassificationError(String),
+    #[error("Invalid input error: {0}")]
+    InvalidInput(String),
 }
