@@ -141,7 +141,7 @@ const RunProject: React.FC = () => {
             )}
             {step === 'model' && (
               classificationResults[i] ? (
-                <ModelStepSelector classificationResult={classificationResults[i]} />
+                <ModelStepSelector classificationResult={classificationResults[i]} matrix={matrixResults[i]}/>
               ) : (
                 <p className="text-gray-400 italic">Step "{step}" not implemented yet.</p>
               )

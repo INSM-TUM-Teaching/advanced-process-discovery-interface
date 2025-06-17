@@ -1,6 +1,6 @@
 import type { Matrix, MatrixRust, Thresholds } from "@/types/matrix-types";
 
-function toInputMatrix(matrix: Matrix): MatrixRust {
+export function toInputMatrix(matrix: Matrix): MatrixRust {
     return {
         dependencies: matrix.dependencies.map(dep => ({
             key: [dep.from, dep.to],
