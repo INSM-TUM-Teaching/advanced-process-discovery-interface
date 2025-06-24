@@ -14,7 +14,7 @@ const getRecommendedModel = (classification: String): ModelOption => {
   switch (classification.toLowerCase()) {
     case "structured":
       return 'BPMN';
-    case "semi structured":
+    case "semi-structured":
       return 'fCM';
     case "loosely structured":
     case 'unstructured':
@@ -53,7 +53,9 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
     <>
       {continuePressed ? (
         selectedModel === 'BPMN' && loadedFile ? (
-          <BpmnModeler loadedFile={loadedFile} />
+          <div className="h-[65vh] w-full overflow-hidden flex flex-col bg-white shadow rounded-md">
+            <BpmnModeler loadedFile={loadedFile} />
+          </div>
         ) : selectedModel === 'Declare' ? (
           <div className="p-6 max-w-4xl mx-auto">
             <h2 className="text-xl font-semibold mb-4 text-center">Declare Model (JSON)</h2>
@@ -72,9 +74,9 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
           </div>
         )
       ) : (
-        <div className="max-w-md mx-auto p-6 border rounded-xl shadow space-y-6 bg-white">
+        <div className="max-w-md mx-auto p-6 space-y-6 bg-white">
           <h2 className="text-lg font-semibold text-center">
-            Recommended modeling language based on classification:{' '}
+            Recommended modeling language for visulization based on classification:{' '}
             <span className="text-blue-600 font-bold">{recommended}</span>
           </h2>
 
@@ -97,7 +99,7 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
           <div className="text-center">
             <button
               onClick={() => setContinuePressed(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              className="bg-indigo-700 text-white px-4 py-2 rounded-md hover:bg-teal-400 transition"
             >
               Continue
             </button>

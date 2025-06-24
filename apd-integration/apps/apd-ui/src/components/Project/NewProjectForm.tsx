@@ -54,7 +54,7 @@ const NewProjectForm: React.FC = () => {
 
         <div className="flex justify-end">
           <button 
-            className="bg-indigo-700 text-white px-6 py-2 rounded-xl hover:bg-teal-400 transition"
+            className="bg-indigo-700 text-white px-4 py-2 rounded-md hover:bg-teal-400 transition"
             onClick={handleCreate}
           >
             Create
