@@ -10,7 +10,7 @@ const getRecommendation = (result: string) => {
   if (lower === "structured") {
     return {
       language: "BPMN",
-      reason: "BPMN (Business Process Model and Notation) is ideal for structured event logs because it clearly defines well-ordered, rule-based processes using standardized flow elements.",
+      reason: "The imperative BPMN (Business Process Model and Notation) language is ideal for structured event logs because it clearly defines well-ordered processes using standardized flow elements.",
     };
   } else if (lower === "semi-structured") {
     return {

@@ -28,13 +28,12 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
   const recommended = getRecommendedModel(classificationResult);
   const [selectedModel, setSelectedModel] = useState<ModelOption>(recommended);
   const [loadedFile, setLoadedFile] = useState<null | { fileType: string; content: string }>(null);
-  const [continuePressed, setContinuePressed] = useState<boolean>(false);
   const [declareJson, setDeclareJson] = useState<string>("");
 
   const fetchDeclare = async (matrix: Matrix) => {
     const results = await fetchDeclareFromMatrix(new URL("http://localhost:8083/algo"), matrix);
     setDeclareJson(JSON.stringify(results, null, 2));
-  }
+  };
 
   useEffect(() => {
     fetch('/diagram.bpmn')
@@ -47,66 +46,62 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
       });
 
     fetchDeclare(matrix);
-  }, []);
+  }, [matrix]);
 
-  return (
-    <>
-      {continuePressed ? (
-        selectedModel === 'BPMN' && loadedFile ? (
+  const renderModel = () => {
+    switch (selectedModel) {
+      case 'BPMN':
+        return loadedFile ? (
           <div className="h-[65vh] w-full overflow-hidden flex flex-col bg-white shadow rounded-md">
             <BpmnModeler loadedFile={loadedFile} />
           </div>
-        ) : selectedModel === 'Declare' ? (
+        ) : (
+          <p className="text-center">Loading BPMN model...</p>
+        );
+      case 'Declare':
+        return (
           <div className="p-6 max-w-4xl mx-auto">
             <h2 className="text-xl font-semibold mb-4 text-center">Declare Model (JSON)</h2>
             <pre className="bg-gray-100 p-4 rounded overflow-x-auto text-sm">
               {declareJson ? declareJson : "Loading Declare model..."}
             </pre>
           </div>
-        ) : (
+        );
+      case 'fCM':
+        return (
           <div className="text-center p-6">
-            <h2 className="text-lg font-semibold mb-4">
-              You selected: {selectedModel}
-            </h2>
-            <p>
-              Modeler for <strong>{selectedModel}</strong> is not implemented yet.
-            </p>
+            <h2 className="text-lg font-semibold mb-4">You selected: fCM</h2>
+            <p>Modeler for <strong>fCM</strong> is not implemented yet.</p>
           </div>
-        )
-      ) : (
-        <div className="max-w-md mx-auto p-6 space-y-6 bg-white">
-          <h2 className="text-lg font-semibold text-center">
-            Recommended modeling language for visulization based on classification:{' '}
-            <span className="text-blue-600 font-bold">{recommended}</span>
-          </h2>
+        );
+      default:
+        return null;
+    }
+  };
 
-          <form className="space-y-4">
-            {(['BPMN', 'Declare', 'fCM'] as ModelOption[]).map((option) => (
-              <label key={option} className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="model"
-                  value={option}
-                  checked={selectedModel === option}
-                  onChange={() => setSelectedModel(option)}
-                  className="accent-blue-500"
-                />
-                <span>{option}</span>
-              </label>
-            ))}
-          </form>
-
-          <div className="text-center">
+  return (
+    <div className="p-6 space-y-6 max-w-5xl mx-auto">
+      <div className="text-center">
+        <h2 className="text-lg font-semibold">
+          Recommended modeling language: <span className="text-blue-600 font-bold">{recommended}</span>
+        </h2>
+        <div className="flex justify-center mt-4 space-x-4">
+          {(['BPMN', 'Declare', 'fCM'] as ModelOption[]).map((option) => (
             <button
-              onClick={() => setContinuePressed(true)}
-              className="bg-indigo-700 text-white px-4 py-2 rounded-md hover:bg-teal-400 transition"
+              key={option}
+              onClick={() => setSelectedModel(option)}
+              className={`px-4 py-2 rounded-md border ${
+                selectedModel === option ? 'bg-indigo-700 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+              }`}
             >
-              Continue
+              {option}{option === recommended ? ' (Recommended)' : ''}
             </button>
-          </div>
+          ))}
         </div>
-      )}
-    </>
+      </div>
+
+      {renderModel()}
+    </div>
   );
 };
 
