@@ -12,12 +12,12 @@ const getRecommendation = (result: string) => {
       language: "BPMN",
       reason: "The imperative BPMN (Business Process Model and Notation) language is ideal for structured event logs because it clearly defines well-ordered processes using standardized flow elements.",
     };
-  } else if (lower === "semi-structured") {
+  } else if (lower === "semi-structured" || lower === "semi structured") {
     return {
       language: "fCM",
       reason: "fCM is suitable for semi-structured event logs, capturing causal relationships in partially-defined processes where some control flow exists but is not strictly enforced.",
     };
-  } else if (lower === "loosely structured" || lower === "unstructured") {
+  } else if (lower === "loosely structured" || lower === "unstructured" || lower === "loosely-structured") {
     return {
       language: "Declare",
       reason: "Declare is recommended for loosely-structured or unstructured logs because it models flexible, constraint-based behavior without assuming a rigid process flow.",

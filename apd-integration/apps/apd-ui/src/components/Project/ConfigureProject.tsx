@@ -12,6 +12,7 @@ const ConfigureProject: React.FC = () => {
   if (!project) return <p className="text-center mt-12">No project found</p>;
 
   useEffect(() => {
+
     if (project && project.endpoints.length === 0) {
       updateProject({ endpoints: [{ activity: '', structure: '' }] });
     }
@@ -92,6 +93,7 @@ const ConfigureProject: React.FC = () => {
                     min="0"
                     max="1"
                     step="any"
+                    defaultValue={1}
                     onChange={(e) =>
                       handleThresholdChange(i, "temporal_threshold", Number(e.target.value))
                     }
@@ -115,6 +117,7 @@ const ConfigureProject: React.FC = () => {
                     min="0"
                     max="1"
                     step="any"
+                    defaultValue={1}
                     onChange={(e) =>
                       handleThresholdChange(i, "existential_threshold", Number(e.target.value))
                     }

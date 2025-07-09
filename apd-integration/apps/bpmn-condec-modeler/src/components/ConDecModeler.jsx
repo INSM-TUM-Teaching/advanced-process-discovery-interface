@@ -280,16 +280,16 @@ const ConDecModeler = ({ width = '100%', height = '100%', style = {}, loadedFile
   }, [isCanvasInitialized, centerView]);
 
   useEffect(() => {
-    if (loadedFile && loadedFile.fileType.startsWith('condec-')) {
+    if (loadedFile) {
       try {
         let diagram;
-        if (loadedFile.fileType === 'condec-xml') {
+        /*if (loadedFile.fileType === 'xml') {
           diagram = importDeclareXmlWithLayout(loadedFile.content);
-        } else if (loadedFile.fileType === 'condec-txt') {
+        } else if (loadedFile.fileType === 'txt') {
           diagram = importDeclareTxtWithLayout(loadedFile.content);
-        } else if (loadedFile.fileType === 'condec-json') {
+        } else if (loadedFile.fileType === 'json') {*/
           diagram = importDeclareJsonWithLayout(loadedFile.content);
-        }
+        //}
         if (diagram) {
           setDiagram(diagram);
           setTimeout(() => centerView(), 100);

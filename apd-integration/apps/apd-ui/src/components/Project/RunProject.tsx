@@ -8,6 +8,7 @@ import Classification from '../Classification';
 import { downloadYAML } from '@/services/matrix-yaml';
 import type { Matrix, Thresholds } from '@/types/matrix-types';
 import ModelStepSelector from '@/components/ModelStepSelector';
+import { Link } from 'react-router-dom';
 
 const RunProject: React.FC = () => {
   const { project, updateProject } = useProjectStore();
@@ -82,7 +83,7 @@ const RunProject: React.FC = () => {
     >
       <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
         <h3 className="font-semibold text-lg">Log {i + 1}: {project.logs[i].name}</h3>
-  
+
         {step === 'matrix' && (
           <>
             <button
@@ -91,7 +92,7 @@ const RunProject: React.FC = () => {
             >
               Download matrix
             </button>
-  
+
             <div className="flex flex-wrap gap-3 items-center">
               <label htmlFor={`log-temporal-threshold-${i}`} className="text-sm text-gray-700">
                 Temporal:
@@ -123,7 +124,7 @@ const RunProject: React.FC = () => {
           </>
         )}
       </div>
-  
+
       {step === 'matrix' && matrixResults[i] ? (
         <MatrixTable matrix={matrixResults[i]} />
       ) : step === 'classification' && classificationResults[i] ? (
@@ -182,13 +183,22 @@ const RunProject: React.FC = () => {
           </button>
         ))}
 
-        <div className="relative">
+        <div className="mx-8 relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="px-4 py-2 bg-gray-200 rounded-md"
           >
             View
           </button>
+
+          <Link to="/">
+            <button
+              className="px-4 mx-2 py-2 bg-gray-200 rounded-md"
+            >
+              Home
+            </button>
+          </Link>
+
           {dropdownOpen && (
             <div className="absolute z-10 mt-2 w-48 bg-white border rounded-md shadow-md p-2">
               {project.logs.map((log, i) => (

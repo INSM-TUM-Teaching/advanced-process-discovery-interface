@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BpmnModeler } from 'bpmn-condec-modeler';
+import { BpmnModeler, ConDecModeler } from 'bpmn-condec-modeler';
 import type { Matrix } from '@/types/matrix-types';
 import { fetchDeclareFromMatrix } from '@/services/declare-api';
 
@@ -59,13 +59,12 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
           <p className="text-center">Loading BPMN model...</p>
         );
       case 'Declare':
-        return (
-          <div className="p-6 max-w-4xl mx-auto">
-            <h2 className="text-xl font-semibold mb-4 text-center">Declare Model (JSON)</h2>
-            <pre className="bg-gray-100 p-4 rounded overflow-x-auto text-sm">
-              {declareJson ? declareJson : "Loading Declare model..."}
-            </pre>
+        return declareJson ? (
+          <div className="h-[65vh] w-full overflow-hidden flex flex-col bg-white shadow rounded-md">
+            <ConDecModeler loadedFile={declareJson} />
           </div>
+        ) : (
+          <p className="text-center">Loading BPMN model...</p>
         );
       case 'fCM':
         return (
@@ -80,7 +79,7 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
   };
 
   return (
-    <div className="p-6 space-y-6 max-w-5xl mx-auto">
+    <div className="p-6 space-y-6 w-full mx-auto">
       <div className="text-center">
         <h2 className="text-lg font-semibold">
           Recommended modeling language: <span className="text-blue-600 font-bold">{recommended}</span>

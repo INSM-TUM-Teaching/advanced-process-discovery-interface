@@ -155,9 +155,9 @@ export function importDeclareJsonWithLayout(jsonString) {
   } catch (e) {
     throw new Error('Invalid JSON file.');
   }
-  if (!diagram.nodes || !diagram.relations) {
+  /*if (!diagram.nodes || !diagram.relations) {
     throw new Error('JSON must be a diagram object with nodes and relations.');
-  }
+  }*/
   return diagram;
 }
 export function layoutNodesForceDirected(nodes, relations, iterations = 900) {

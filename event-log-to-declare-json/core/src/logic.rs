@@ -1,4 +1,4 @@
-use crate::{generate_dependency_matrix, matrix_to_declare_model, parse_into_traces, InputMatrix, Activity, DeclareModel};
+use crate::{generate_dependency_matrix, matrix_to_declare_model, declare_model_to_txt, parse_into_traces, InputMatrix, Activity, DeclareModel};
 use crate::AppError;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -37,9 +37,10 @@ fn extract_activities(dto: &MatrixRustIncoming) -> Result<HashSet<String>, AppEr
     Ok(activities)
 }
 
-pub fn process_matrix_declare(matrix_react: MatrixRustIncoming) -> Result<DeclareModel, AppError> {
+pub fn process_matrix_declare(matrix_react: MatrixRustIncoming) -> Result<String, AppError> {
     let activities = extract_activities(&matrix_react)?;
     let matrix = to_input_matrix(matrix_react)?;
-    let classification_result = matrix_to_declare_model(&matrix, &activities, "model");
+    let declare_model = matrix_to_declare_model(&matrix, &activities, "model");
+    let classification_result = declare_model_to_txt(&declare_model);
     Ok(classification_result)
 }

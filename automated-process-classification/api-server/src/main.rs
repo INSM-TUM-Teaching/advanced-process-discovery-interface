@@ -78,7 +78,7 @@ async fn main() {
         .route("/algo/matrix", post(classify_matrix))
         .layer(cors);
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8082));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8082));
     println!("Listening on {}", addr);
 
     let listener = TcpListener::bind(&addr).await.expect("Failed to bind");

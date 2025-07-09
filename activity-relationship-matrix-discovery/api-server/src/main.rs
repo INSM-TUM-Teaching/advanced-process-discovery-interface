@@ -60,7 +60,7 @@ async fn main() {
         .route("/algo", post(upload))
         .layer(cors);
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8081));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8081));
     println!("Listening on {}", addr);
 
     let listener = TcpListener::bind(&addr).await.expect("Failed to bind");

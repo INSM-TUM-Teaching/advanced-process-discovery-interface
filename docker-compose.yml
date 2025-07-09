@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  matrix-discovery:
+    build: ./activity-relationship-matrix-discovery
+    ports:
+      - "8081:8081"
+
+  process-classification:
+    build: ./automated-process-classification
+    ports:
+      - "8082:8082"
+
+  log-to-declare:
+    build: ./event-log-to-declare-json
+    ports:
+      - "8083:8083"
+
+  frontend:
+    build:
+      context: ./apd-integration/
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    working_dir: /app/apd-ui
+    depends_on:
+      - matrix-discovery
+      - process-classification
+      - log-to-declare

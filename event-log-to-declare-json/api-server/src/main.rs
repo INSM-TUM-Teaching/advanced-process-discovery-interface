@@ -15,7 +15,7 @@ struct ErrorResponse {
     error: String,
 }
 
-async fn declare_matrix(Json(payload): Json<MatrixRustIncoming>) -> Result<Json<DeclareModel>, (StatusCode, Json<ErrorResponse>)> {
+async fn declare_matrix(Json(payload): Json<MatrixRustIncoming>) -> Result<Json<String>, (StatusCode, Json<ErrorResponse>)> {
     match process_matrix_declare(payload) {
         Ok(result) => Ok(Json(result)),
         Err(e) => Err((
@@ -39,7 +39,7 @@ async fn main() {
         .route("/algo", post(declare_matrix))
         .layer(cors);
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8083));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8083));
     println!("Listening on {}", addr);
 
     let listener = TcpListener::bind(&addr).await.expect("Failed to bind");

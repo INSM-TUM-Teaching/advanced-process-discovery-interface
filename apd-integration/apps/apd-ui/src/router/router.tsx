@@ -12,9 +12,9 @@ const router: React.FC = () => {
   return (
     <Routes>
       <Route path="/test" element={<Test />} />
-      <Route path="/" element={<Layout><Landing /></Layout>} />
-      <Route path="/project" element={<Layout><Project /></Layout>} />
-      <Route path="/documentation" element={<Layout><Documentation /></Layout>} />
+      <Route path="/" element={<Landing />} />
+      <Route path="/project" element={<Project />} />
+      <Route path="/documentation" element={<Documentation />} />
       <Route path="/about" element={<Layout><About /></Layout>} />
       <Route path="/project/setup" element={<ConfigureProject />} />
       <Route path="/project/run" element={<RunProject />} />

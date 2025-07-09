@@ -3,7 +3,7 @@ import { toInputMatrix } from "./classification-api";
 
 export async function fetchDeclareFromMatrix(url: URL, matrix: Matrix) {
     const rustMatrix: MatrixRust = toInputMatrix(matrix);
-    
+    console.log(JSON.stringify(rustMatrix));
     const response = await fetch(url, {
         method: "POST",
         headers: {
