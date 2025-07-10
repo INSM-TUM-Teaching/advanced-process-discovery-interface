@@ -128,9 +128,9 @@ const RunProject: React.FC = () => {
       {step === 'matrix' && matrixResults[i] ? (
         <MatrixTable matrix={matrixResults[i]} />
       ) : step === 'classification' && classificationResults[i] ? (
-        <Classification result={classificationResults[i]} failedRule="ss1" />
+        <Classification result={classificationResults[i].classification} matchedRules={classificationResults[i].matched_rules} />
       ) : step === 'model' && classificationResults[i] ? (
-        <ModelStepSelector classificationResult={classificationResults[i]} matrix={matrixResults[i]} />
+        <ModelStepSelector classificationResult={classificationResults[i].classification} matrix={matrixResults[i]} eventLog={project.logs[i].log} threshold={project.thresholds[i]}/>
       ) : (
         <p className="text-gray-500">Loading {step}...</p>
       )}

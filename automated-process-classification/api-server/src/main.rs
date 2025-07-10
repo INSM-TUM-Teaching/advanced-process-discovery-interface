@@ -8,7 +8,7 @@ use tower_http::cors::{CorsLayer, Any};
 use serde::{Serialize, Deserialize};
 use std::net::SocketAddr;
 use tokio::net::TcpListener;
-use core::{process_xes_classification, process_matrix_classification, MatrixRustIncoming};
+use core::{process_xes_classification, process_matrix_classification, MatrixRustIncoming, ClassificationOutput};
 
 #[derive(Deserialize)]
 struct Thresholds {
@@ -21,7 +21,7 @@ struct ErrorResponse {
     error: String,
 }
 
-async fn upload(mut multipart: Multipart) -> Result<Json<String>, String> {
+async fn upload(mut multipart: Multipart) -> Result<Json<ClassificationOutput>, String> {
     let mut content = None;
     let mut existential_threshold = None;
     let mut temporal_threshold = None;
@@ -53,7 +53,7 @@ async fn upload(mut multipart: Multipart) -> Result<Json<String>, String> {
     }
 }
 
-async fn classify_matrix(Json(payload): Json<MatrixRustIncoming>) -> Result<Json<String>, (StatusCode, Json<ErrorResponse>)> {
+async fn classify_matrix(Json(payload): Json<MatrixRustIncoming>) -> Result<Json<ClassificationOutput>, (StatusCode, Json<ErrorResponse>)> {
     match process_matrix_classification(payload) {
         Ok(result) => Ok(Json(result)),
         Err(e) => Err((

@@ -1,4 +1,5 @@
 import type { Matrix, MatrixRust, Thresholds } from "@/types/matrix-types";
+import type { ClassificationOutput } from "@/types/classification-types";
 
 export function toInputMatrix(matrix: Matrix): MatrixRust {
     return {
@@ -9,7 +10,7 @@ export function toInputMatrix(matrix: Matrix): MatrixRust {
     };
 }
 
-export async function fetchClassification(url: URL, file: File, thresholds: Thresholds): Promise<string> {
+export async function fetchClassification(url: URL, file: File, thresholds: Thresholds): Promise<ClassificationOutput> {
     const formData = new FormData();
     formData.append("file",file);
     formData.append("existential_threshold", thresholds.existential_threshold.toString());
@@ -25,7 +26,7 @@ export async function fetchClassification(url: URL, file: File, thresholds: Thre
         throw new Error(`Failed to fetch classification ${errorText}`);
     }
 
-    const classification: string = await response.json();
+    const classification: ClassificationOutput = await response.json();
     return classification;
 }
 
@@ -45,6 +46,6 @@ export async function fetchClassificationFromMatrix(url: URL, matrix: Matrix) {
         throw new Error(error.error || "Unknown error");
       }
 
-    const classification: string = await response.json();
+    const classification: ClassificationOutput = await response.json();
     return classification;
 }

@@ -8,4 +8,6 @@ pub enum AppError {
     ClassificationError(String),
     #[error("Invalid input error: {0}")]
     InvalidInput(String),
+    #[error("Error parsing traces: {0}")]
+    ParseError(String)
 }

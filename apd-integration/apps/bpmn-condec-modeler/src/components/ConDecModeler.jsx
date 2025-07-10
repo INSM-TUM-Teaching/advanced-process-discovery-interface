@@ -283,13 +283,13 @@ const ConDecModeler = ({ width = '100%', height = '100%', style = {}, loadedFile
     if (loadedFile) {
       try {
         let diagram;
-        /*if (loadedFile.fileType === 'xml') {
+        if (loadedFile.fileType === 'xml') {
           diagram = importDeclareXmlWithLayout(loadedFile.content);
         } else if (loadedFile.fileType === 'txt') {
           diagram = importDeclareTxtWithLayout(loadedFile.content);
-        } else if (loadedFile.fileType === 'json') {*/
+        } else if (loadedFile.fileType === 'json') {
           diagram = importDeclareJsonWithLayout(loadedFile.content);
-        //}
+        }
         if (diagram) {
           setDiagram(diagram);
           setTimeout(() => centerView(), 100);

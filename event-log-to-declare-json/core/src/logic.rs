@@ -37,9 +37,36 @@ fn extract_activities(dto: &MatrixRustIncoming) -> Result<HashSet<String>, AppEr
     Ok(activities)
 }
 
+fn extract_activities_log(matrix: &InputMatrix) -> HashSet<Activity> {
+    let mut activities = HashSet::new();
+
+    for ((a1, a2), _) in matrix {
+        activities.insert(a1.clone());
+        activities.insert(a2.clone());
+    }
+
+    activities
+}
+
 pub fn process_matrix_declare(matrix_react: MatrixRustIncoming) -> Result<String, AppError> {
     let activities = extract_activities(&matrix_react)?;
     let matrix = to_input_matrix(matrix_react)?;
+    let declare_model = matrix_to_declare_model(&matrix, &activities, "model");
+    let classification_result = declare_model_to_txt(&declare_model);
+    Ok(classification_result)
+}
+
+pub fn process_log_declare(content: &str, existential_threshold: f64, temporal_threshold: f64) -> Result<String, AppError> {
+    let traces = parse_into_traces(None, Some(content))
+        .map_err(|e| AppError::ParseError(format!("{:?}", e)))?;
+
+    let matrix = generate_dependency_matrix(
+        &traces,
+        existential_threshold,
+        temporal_threshold,
+    );
+
+    let activities = extract_activities_log(&matrix.clone());
     let declare_model = matrix_to_declare_model(&matrix, &activities, "model");
     let classification_result = declare_model_to_txt(&declare_model);
     Ok(classification_result)

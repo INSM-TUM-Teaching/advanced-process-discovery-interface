@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { BpmnModeler, ConDecModeler } from 'bpmn-condec-modeler';
-import type { Matrix } from '@/types/matrix-types';
-import { fetchDeclareFromMatrix } from '@/services/declare-api';
+import type { Matrix, Thresholds } from '@/types/matrix-types';
+import { fetchDeclareFromMatrix, fetchDeclareFromLog } from '@/services/declare-api';
 
 type ModelOption = 'BPMN' | 'Declare' | 'fCM';
 
 interface ModelStepSelectorProps {
   classificationResult: String;
   matrix: Matrix;
+  eventLog?: File;
+  threshold?: Thresholds
 }
 
 const getRecommendedModel = (classification: String): ModelOption => {
   switch (classification.toLowerCase()) {
     case "structured":
       return 'BPMN';
-    case "semi-structured":
+    case "semistructured":
       return 'fCM';
-    case "loosely structured":
+    case "looselystructured":
     case 'unstructured':
       return 'Declare';
     default:
@@ -24,15 +26,21 @@ const getRecommendedModel = (classification: String): ModelOption => {
   }
 };
 
-const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationResult, matrix }) => {
+const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationResult, matrix, eventLog, threshold}) => {
   const recommended = getRecommendedModel(classificationResult);
   const [selectedModel, setSelectedModel] = useState<ModelOption>(recommended);
   const [loadedFile, setLoadedFile] = useState<null | { fileType: string; content: string }>(null);
-  const [declareJson, setDeclareJson] = useState<string>("");
+  const [DeclareFile, setDeclareFile] = useState<null | { fileType: string; content: string }>(null);
 
   const fetchDeclare = async (matrix: Matrix) => {
-    const results = await fetchDeclareFromMatrix(new URL("http://localhost:8083/algo"), matrix);
-    setDeclareJson(JSON.stringify(results, null, 2));
+    if (eventLog && threshold) {
+      const results = await fetchDeclareFromLog(new URL("http://localhost:8083/algo"), eventLog, threshold);
+      setDeclareFile({ fileType: "txt", content: results });
+    }
+    else {
+      const results = await fetchDeclareFromMatrix(new URL("http://localhost:8083/algo/matrix"), matrix);
+      setDeclareFile({ fileType: "txt", content: results });
+    }
   };
 
   useEffect(() => {
@@ -59,12 +67,12 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
           <p className="text-center">Loading BPMN model...</p>
         );
       case 'Declare':
-        return declareJson ? (
+        return DeclareFile?.content ? (
           <div className="h-[65vh] w-full overflow-hidden flex flex-col bg-white shadow rounded-md">
-            <ConDecModeler loadedFile={declareJson} />
+            <ConDecModeler loadedFile={DeclareFile} />
           </div>
         ) : (
-          <p className="text-center">Loading BPMN model...</p>
+          <p className="text-center">Loading ConDec model...</p>
         );
       case 'fCM':
         return (

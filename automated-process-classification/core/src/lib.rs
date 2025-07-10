@@ -6,7 +6,7 @@ pub mod dependency_types;
 pub mod error;
 
 
-pub use classification::{classify_matrix, InputMatrix};
+pub use classification::{classify_matrix, InputMatrix, ClassificationOutput};
 pub use matrix_generation::generate_dependency_matrix;
 pub use parser::parse_into_traces;
 pub use error::{AppError};

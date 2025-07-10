@@ -1,4 +1,4 @@
-use crate::{generate_dependency_matrix, classify_matrix, parse_into_traces, InputMatrix};
+use crate::{generate_dependency_matrix, classify_matrix, parse_into_traces, InputMatrix, ClassificationOutput};
 use crate::AppError;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -26,7 +26,7 @@ fn to_input_matrix(dto: MatrixRustIncoming) -> Result<InputMatrix, AppError> {
         .collect()
 }
 
-pub fn process_xes_classification(content: &str, existential_threshold: f64, temporal_threshold: f64) -> Result<String, AppError> {
+pub fn process_xes_classification(content: &str, existential_threshold: f64, temporal_threshold: f64) -> Result<ClassificationOutput, AppError> {
     let traces = parse_into_traces(None, Some(&content))
     .map_err(|e| AppError::XesParseError(e.to_string()))?;
 
@@ -41,11 +41,11 @@ pub fn process_xes_classification(content: &str, existential_threshold: f64, tem
     );
 
     let classification_result = classify_matrix(&matrix);
-    Ok(classification_result.to_string())
+    Ok(classification_result)
 }
 
-pub fn process_matrix_classification(matrix_react: MatrixRustIncoming) -> Result<String, AppError> {
+pub fn process_matrix_classification(matrix_react: MatrixRustIncoming) -> Result<ClassificationOutput, AppError> {
     let matrix = to_input_matrix(matrix_react)?;
     let classification_result = classify_matrix(&matrix);
-    Ok(classification_result.to_string())
+    Ok(classification_result)
 }
