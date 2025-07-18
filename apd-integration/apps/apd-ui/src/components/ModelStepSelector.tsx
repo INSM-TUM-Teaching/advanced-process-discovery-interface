@@ -10,6 +10,7 @@ interface ModelStepSelectorProps {
   matrix: Matrix;
   eventLog?: File;
   threshold?: Thresholds
+  url: string;
 }
 
 const getRecommendedModel = (classification: String): ModelOption => {
@@ -26,7 +27,7 @@ const getRecommendedModel = (classification: String): ModelOption => {
   }
 };
 
-const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationResult, matrix, eventLog, threshold}) => {
+const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationResult, matrix, eventLog, threshold, url}) => {
   const recommended = getRecommendedModel(classificationResult);
   const [selectedModel, setSelectedModel] = useState<ModelOption>(recommended);
   const [loadedFile, setLoadedFile] = useState<null | { fileType: string; content: string }>(null);
@@ -34,11 +35,11 @@ const ModelStepSelector: React.FC<ModelStepSelectorProps> = ({ classificationRes
 
   const fetchDeclare = async (matrix: Matrix) => {
     if (eventLog && threshold) {
-      const results = await fetchDeclareFromLog(new URL("http://localhost:8083/algo"), eventLog, threshold);
+      const results = await fetchDeclareFromLog(new URL(url), eventLog, threshold);
       setDeclareFile({ fileType: "txt", content: results });
     }
     else {
-      const results = await fetchDeclareFromMatrix(new URL("http://localhost:8083/algo/matrix"), matrix);
+      const results = await fetchDeclareFromMatrix(new URL(url+"/matrix"), matrix);
       setDeclareFile({ fileType: "txt", content: results });
     }
   };

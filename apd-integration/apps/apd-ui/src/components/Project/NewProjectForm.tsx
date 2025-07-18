@@ -14,7 +14,7 @@ const NewProjectForm: React.FC = () => {
       name: projectName,
       modelsCount,
       logs: Array(modelsCount).fill(null),
-      endpoints: [{activity: "http://localhost:8081/algo", structure: "http://localhost:8082/algo"}],
+      endpoints: [{activity: window.location.protocol+"//"+window.location.hostname+":8081"+"/algo", structure: window.location.protocol+"//"+window.location.hostname+":8082"+"/algo", declare: window.location.protocol+"//"+window.location.hostname+":8083"+"/algo"}],
       thresholds: Array(modelsCount).fill({existential_threshold: 1, temporal_threshold: 1}),
       compare: false,
     });

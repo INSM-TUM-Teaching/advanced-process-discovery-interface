@@ -130,7 +130,7 @@ const RunProject: React.FC = () => {
       ) : step === 'classification' && classificationResults[i] ? (
         <Classification result={classificationResults[i].classification} matchedRules={classificationResults[i].matched_rules} />
       ) : step === 'model' && classificationResults[i] ? (
-        <ModelStepSelector classificationResult={classificationResults[i].classification} matrix={matrixResults[i]} eventLog={project.logs[i].log} threshold={project.thresholds[i]}/>
+        <ModelStepSelector url={project.endpoints[i].declare} classificationResult={classificationResults[i].classification} matrix={matrixResults[i]} eventLog={project.logs[i].log} threshold={project.thresholds[i]}/>
       ) : (
         <p className="text-gray-500">Loading {step}...</p>
       )}

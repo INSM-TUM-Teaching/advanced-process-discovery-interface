@@ -3,6 +3,7 @@ import type { Matrix, Thresholds } from './matrix-types'
 export  type EndpointPair = {
     activity: string;
     structure: string;
+    declare: string;
   };
 
 type EventLog = {

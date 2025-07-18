@@ -14,7 +14,7 @@ const ConfigureProject: React.FC = () => {
   useEffect(() => {
 
     if (project && project.endpoints.length === 0) {
-      updateProject({ endpoints: [{ activity: '', structure: '' }] });
+      updateProject({ endpoints: [{ activity: '', structure: '', declare: ''}] });
     }
   }, [project, updateProject]);
 
@@ -92,7 +92,7 @@ const ConfigureProject: React.FC = () => {
                     type="number"
                     min="0"
                     max="1"
-                    step="any"
+                    step="0.1"
                     defaultValue={1}
                     onChange={(e) =>
                       handleThresholdChange(i, "temporal_threshold", Number(e.target.value))
@@ -116,7 +116,7 @@ const ConfigureProject: React.FC = () => {
                     type="number"
                     min="0"
                     max="1"
-                    step="any"
+                    step="0.1"
                     defaultValue={1}
                     onChange={(e) =>
                       handleThresholdChange(i, "existential_threshold", Number(e.target.value))
@@ -152,7 +152,7 @@ const ConfigureProject: React.FC = () => {
                   </label>
                   <input
                     type="url"
-                    defaultValue="http://localhost:8081/algo"
+                    defaultValue={window.location.protocol+"//"+window.location.hostname+":8081"+"/algo"}
                     onChange={(e) =>
                       handleEndpointChange(i, 'activity', e.target.value)
                     }
@@ -165,9 +165,22 @@ const ConfigureProject: React.FC = () => {
                   </label>
                   <input
                     type="url"
-                    defaultValue="http://localhost:8082/algo"
+                    defaultValue={window.location.protocol+"//"+window.location.hostname+":8082"+"/algo"}
                     onChange={(e) =>
                       handleEndpointChange(i, 'structure', e.target.value)
+                    }
+                    className="w-full px-4 py-2 rounded-md border border-gray-300"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Event log to declare endpoint {project.compare ? `(Log ${i + 1})` : ''}
+                  </label>
+                  <input
+                    type="url"
+                    defaultValue={window.location.protocol+"//"+window.location.hostname+":8083"+"/algo"}
+                    onChange={(e) =>
+                      handleEndpointChange(i, 'declare', e.target.value)
                     }
                     className="w-full px-4 py-2 rounded-md border border-gray-300"
                   />
