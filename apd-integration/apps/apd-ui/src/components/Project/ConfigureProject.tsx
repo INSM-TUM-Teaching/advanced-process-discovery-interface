@@ -14,15 +14,28 @@ const ConfigureProject: React.FC = () => {
   useEffect(() => {
 
     if (project && project.endpoints.length === 0) {
-      updateProject({ endpoints: [{ activity: '', structure: '', declare: ''}] });
+      updateProject({ endpoints: [{ activity: '', structure: '', declare: '' }] });
     }
   }, [project, updateProject]);
 
   const { modelsCount } = project;
 
-  const handleLogChange = (file: File | null, fileName: string | undefined, index: number) => {
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+    });
+  };
+
+  const handleLogChange = async (file: File | null, fileName: string | undefined, index: number) => {
+    if (!file || !fileName) return;
+
+    const base64 = await fileToBase64(file);
+
     const updatedLogs = [...project.logs];
-    updatedLogs[index] = { log: file!, name: fileName! };
+    updatedLogs[index] = { name: fileName, base64 }
     updateProject({ logs: updatedLogs });
   };
 
@@ -48,7 +61,7 @@ const ConfigureProject: React.FC = () => {
     const total = newCompare ? modelsCount : 1;
     const updated = Array(total)
       .fill(null)
-      .map((_, i) => project.endpoints[i] || { activity: '', structure: '' });
+      .map((_, i) => project.endpoints[i] || { activity: window.location.protocol + "//" + window.location.hostname + ":8081" + "/algo", structure: window.location.protocol + "//" + window.location.hostname + ":8082" + "/algo", declare: window.location.protocol + "//" + window.location.hostname + ":8083" + "/algo" });
     updateProject({ compare: newCompare, endpoints: updated });
   };
 
@@ -152,7 +165,7 @@ const ConfigureProject: React.FC = () => {
                   </label>
                   <input
                     type="url"
-                    defaultValue={window.location.protocol+"//"+window.location.hostname+":8081"+"/algo"}
+                    defaultValue={window.location.protocol + "//" + window.location.hostname + ":8081" + "/algo"}
                     onChange={(e) =>
                       handleEndpointChange(i, 'activity', e.target.value)
                     }
@@ -165,7 +178,7 @@ const ConfigureProject: React.FC = () => {
                   </label>
                   <input
                     type="url"
-                    defaultValue={window.location.protocol+"//"+window.location.hostname+":8082"+"/algo"}
+                    defaultValue={window.location.protocol + "//" + window.location.hostname + ":8082" + "/algo"}
                     onChange={(e) =>
                       handleEndpointChange(i, 'structure', e.target.value)
                     }
@@ -178,7 +191,7 @@ const ConfigureProject: React.FC = () => {
                   </label>
                   <input
                     type="url"
-                    defaultValue={window.location.protocol+"//"+window.location.hostname+":8083"+"/algo"}
+                    defaultValue={window.location.protocol + "//" + window.location.hostname + ":8083" + "/algo"}
                     onChange={(e) =>
                       handleEndpointChange(i, 'declare', e.target.value)
                     }
@@ -191,7 +204,11 @@ const ConfigureProject: React.FC = () => {
         </div>
 
         <button
-          onClick={() => navigate('/project/run')}
+          onClick={() => {
+            console.log(project.endpoints)
+            navigate('/project/run')
+          }
+          }
           className="w-full bg-indigo-700 hover:bg-teal-400 text-white font-semibold py-2 px-4 rounded-md transition"
         >
           Continue

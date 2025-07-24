@@ -7,7 +7,7 @@ export  type EndpointPair = {
   };
 
 type EventLog = {
-  log: File,
+  base64: string;
   name: string
 }
 
@@ -25,6 +25,7 @@ export type ProjectContextType = {
   project: ProjectData | null;
   setProject: (data: ProjectData) => void;
   updateProject: (partial: Partial<ProjectData>) => void;
+  clearProject: () => void;
 };
 
 export type Step = 'matrix' | 'classification' | 'model';

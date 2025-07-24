@@ -8,15 +8,31 @@ import Classification from '../Classification';
 import { downloadYAML } from '@/services/matrix-yaml';
 import type { Matrix, Thresholds } from '@/types/matrix-types';
 import ModelStepSelector from '@/components/ModelStepSelector';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const RunProject: React.FC = () => {
-  const { project, updateProject } = useProjectStore();
+  const { project, updateProject, clearProject } = useProjectStore();
   const [step, setStep] = useState<Step>('matrix');
   const [matrixResults, setMatrixResults] = useState<any[]>([]);
   const [classificationResults, setClassificationResults] = useState<any[]>([]);
   const [visibleLogs, setVisibleLogs] = useState<boolean[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleBackHome = () => {
+    clearProject();
+    navigate('/');
+  };
+
+  const base64ToBlob = (base64: string, mime = "application/xml") => {
+    const byteString = atob(base64.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mime });
+  };
 
   useEffect(() => {
     if (project?.logs) {
@@ -51,7 +67,8 @@ const RunProject: React.FC = () => {
         project.logs.map((log, i) => {
           const endpoint = project.compare ? project.endpoints[i]?.activity : project.endpoints[0]?.activity;
           if (!log || !endpoint) return null;
-          return fetchMatrix(new URL(endpoint), log.log, project.thresholds[i]);
+          const logBlob = base64ToBlob(log.base64);
+          return fetchMatrix(new URL(endpoint), new File([logBlob], log.name, { type: "application/xml" }), project.thresholds[i]);
         })
       );
       setMatrixResults(results);
@@ -62,7 +79,8 @@ const RunProject: React.FC = () => {
         project.logs.map((log, i) => {
           const endpoint = project.compare ? project.endpoints[i]?.structure : project.endpoints[0]?.structure;
           if (!log || !endpoint) return null;
-          return fetchClassification(new URL(endpoint), log.log, project.thresholds[i]);
+          const logBlob = base64ToBlob(log.base64);
+          return fetchClassification(new URL(endpoint), new File([logBlob], log.name, { type: "application/xml" }), project.thresholds[i]);
         })
       );
       setClassificationResults(results);
@@ -130,7 +148,7 @@ const RunProject: React.FC = () => {
       ) : step === 'classification' && classificationResults[i] ? (
         <Classification result={classificationResults[i].classification} matchedRules={classificationResults[i].matched_rules} />
       ) : step === 'model' && classificationResults[i] ? (
-        <ModelStepSelector url={project.endpoints[i].declare} classificationResult={classificationResults[i].classification} matrix={matrixResults[i]} eventLog={project.logs[i].log} threshold={project.thresholds[i]}/>
+        <ModelStepSelector url={project.compare ? project.endpoints[i].declare : project.endpoints[0].declare} classificationResult={classificationResults[i].classification} matrix={matrixResults[i]} eventLog={new File([base64ToBlob(project.logs[i].base64)], project.logs[i].name, { type: "application/xml" })} threshold={project.thresholds[i]} />
       ) : (
         <p className="text-gray-500">Loading {step}...</p>
       )}
@@ -191,13 +209,12 @@ const RunProject: React.FC = () => {
             View
           </button>
 
-          <Link to="/">
-            <button
-              className="px-4 mx-2 py-2 bg-gray-200 rounded-md"
-            >
-              Home
-            </button>
-          </Link>
+          <button
+            onClick={handleBackHome}
+            className="px-4 mx-2 py-2 bg-gray-200 rounded-md"
+          >
+            Home
+          </button>
 
           {dropdownOpen && (
             <div className="absolute z-10 mt-2 w-48 bg-white border rounded-md shadow-md p-2">
