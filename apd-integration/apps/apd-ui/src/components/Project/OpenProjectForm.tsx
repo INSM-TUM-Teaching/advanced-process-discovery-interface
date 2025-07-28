@@ -48,9 +48,9 @@ const OpenProjectForm: React.FC = () => {
     }
 
     updateProject({
-      logs: [{log: new File([], ""), name: fileName}],
+      logs: [{base64: "", name: fileName}],
       compare: false,
-      endpoints: [{ activity: "",  structure: endpoint}],
+      endpoints: [{ activity: "",  structure: endpoint, declare: ""}],
       matrix: pendingMatrix,
       modelsCount: 1,
       thresholds: [{existential_threshold: 1, temporal_threshold: 1}]
@@ -62,7 +62,7 @@ const OpenProjectForm: React.FC = () => {
     <div className="flex-1 flex items-center justify-center">
       <div className="w-full max-w-md bg-gray-100 p-8 rounded-xl shadow">
         <div className="mb-6">
-          <label className="block mb-4 font-medium">Upload your .apd or .yaml file</label>
+          <label className="block mb-4 font-medium">Upload your .yaml file</label>
           <label
             htmlFor="project"
             className="flex items-center gap-3 w-full cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition"

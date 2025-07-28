@@ -1,20 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { EndpointPair } from '@/types/project-types';
 import { useProjectStore } from '@/hooks/useProjectStore';
-import { UploadIcon } from 'lucide-react';
+import { UploadIcon, Plus, Minus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Thresholds } from '@/types/matrix-types';
+
 
 const ConfigureProject: React.FC = () => {
   const { project, updateProject } = useProjectStore();
   const navigate = useNavigate();
 
+  const [showEndpoints, setShowEndpoints] = useState(false);
+
   if (!project) return <p className="text-center mt-12">No project found</p>;
 
   useEffect(() => {
-
     if (project && project.endpoints.length === 0) {
-      updateProject({ endpoints: [{ activity: '', structure: '', declare: '' }] });
+      updateProject({
+        endpoints: [{ activity: '', structure: '', declare: '' }],
+      });
     }
   }, [project, updateProject]);
 
@@ -35,7 +39,7 @@ const ConfigureProject: React.FC = () => {
     const base64 = await fileToBase64(file);
 
     const updatedLogs = [...project.logs];
-    updatedLogs[index] = { name: fileName, base64 }
+    updatedLogs[index] = { name: fileName, base64 };
     updateProject({ logs: updatedLogs });
   };
 
@@ -61,8 +65,18 @@ const ConfigureProject: React.FC = () => {
     const total = newCompare ? modelsCount : 1;
     const updated = Array(total)
       .fill(null)
-      .map((_, i) => project.endpoints[i] || { activity: window.location.protocol + "//" + window.location.hostname + ":8081" + "/algo", structure: window.location.protocol + "//" + window.location.hostname + ":8082" + "/algo", declare: window.location.protocol + "//" + window.location.hostname + ":8083" + "/algo" });
+      .map((_, i) =>
+        project.endpoints[i] || {
+          activity: `${window.location.protocol}//${window.location.hostname}:8081/algo`,
+          structure: `${window.location.protocol}//${window.location.hostname}:8082/algo`,
+          declare: `${window.location.protocol}//${window.location.hostname}:8083/algo`,
+        }
+      );
     updateProject({ compare: newCompare, endpoints: updated });
+
+    if (newCompare) {
+      setShowEndpoints(true);
+    }
   };
 
   return (
@@ -154,8 +168,18 @@ const ConfigureProject: React.FC = () => {
           </label>
         </div>
 
-        <div>
-          <h2 className="text-lg font-semibold mb-4">Configure Algorithm Endpoints</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">Configure Algorithm Endpoints</h2>
+          <button
+            onClick={() => setShowEndpoints(!showEndpoints)}
+            className="p-1 rounded hover:bg-gray-200 transition"
+            aria-label={showEndpoints ? 'Collapse' : 'Expand'}
+          >
+            {showEndpoints ? <Minus className="w-5 h-5 text-gray-700" /> : <Plus className="w-5 h-5 text-gray-700" />}
+          </button>
+        </div>
+
+        {showEndpoints && (
           <div className="space-y-6">
             {project.endpoints.map((pair, i) => (
               <div key={i} className="space-y-3">
@@ -165,7 +189,7 @@ const ConfigureProject: React.FC = () => {
                   </label>
                   <input
                     type="url"
-                    defaultValue={window.location.protocol + "//" + window.location.hostname + ":8081" + "/algo"}
+                    defaultValue={pair.activity}
                     onChange={(e) =>
                       handleEndpointChange(i, 'activity', e.target.value)
                     }
@@ -178,7 +202,7 @@ const ConfigureProject: React.FC = () => {
                   </label>
                   <input
                     type="url"
-                    defaultValue={window.location.protocol + "//" + window.location.hostname + ":8082" + "/algo"}
+                    defaultValue={pair.structure}
                     onChange={(e) =>
                       handleEndpointChange(i, 'structure', e.target.value)
                     }
@@ -191,7 +215,7 @@ const ConfigureProject: React.FC = () => {
                   </label>
                   <input
                     type="url"
-                    defaultValue={window.location.protocol + "//" + window.location.hostname + ":8083" + "/algo"}
+                    defaultValue={pair.declare}
                     onChange={(e) =>
                       handleEndpointChange(i, 'declare', e.target.value)
                     }
@@ -201,14 +225,13 @@ const ConfigureProject: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
+        )}
 
         <button
           onClick={() => {
-            console.log(project.endpoints)
-            navigate('/project/run')
-          }
-          }
+            console.log(project.endpoints);
+            navigate('/project/run');
+          }}
           className="w-full bg-indigo-700 hover:bg-teal-400 text-white font-semibold py-2 px-4 rounded-md transition"
         >
           Continue

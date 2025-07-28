@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Plus, Minus } from 'lucide-react';
 
 interface ClassificationResultProps {
   result: string;
@@ -28,6 +29,8 @@ const getRecommendation = (result: string) => {
 };
 
 const Classification: React.FC<ClassificationResultProps> = ({ result, matchedRules }) => {
+  const [showRules, setShowRules] = useState(false);
+
   if (!result) return null;
 
   const recommendation = getRecommendation(result);
@@ -48,27 +51,46 @@ const Classification: React.FC<ClassificationResultProps> = ({ result, matchedRu
 
       {matchedRules && matchedRules.length > 0 && (
         <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
-          <p className="text-sm text-red-700 font-medium mb-2">Reason (matched rules):</p>
-          <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
-            {matchedRules.map((rule, index) => (
-              <li key={index} className="pl-1">{rule}</li>
-            ))}
-          </ul>
-
-          <div className="mt-4">
-            <img
-              src="../../rules.jpg"
-              alt="Diagram explaining rule meaning"
-              className="rounded-md border shadow max-w-full h-auto"
-            />
-            <p className="text-xs text-gray-500 text-center mt-2">
-              Diagram illustrating the logic behind matched rules
-            </p>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-sm text-red-700 font-medium">Reason (matched rules):</p>
+            <button
+              onClick={() => setShowRules(!showRules)}
+              className="p-1 rounded hover:bg-red-100 transition"
+              aria-label={showRules ? 'Collapse' : 'Expand'}
+            >
+              {showRules ? (
+                <Minus className="w-4 h-4 text-red-600" />
+              ) : (
+                <Plus className="w-4 h-4 text-red-600" />
+              )}
+            </button>
           </div>
+
+          {showRules && (
+            <>
+              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                {matchedRules.map((rule, index) => (
+                  <li key={index} className="pl-1">{rule}</li>
+                ))}
+              </ul>
+
+              <div className="mt-4">
+                <img
+                  src="../../rules.jpg"
+                  alt="Diagram explaining rule meaning"
+                  className="rounded-md border shadow max-w-full h-auto"
+                />
+                <p className="text-xs text-gray-500 text-center mt-2">
+                  Diagram illustrating the logic behind matched rules
+                </p>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
   );
 };
+
 
 export default Classification;

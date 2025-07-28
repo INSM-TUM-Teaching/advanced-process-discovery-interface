@@ -201,41 +201,46 @@ const RunProject: React.FC = () => {
           </button>
         ))}
 
-        <div className="mx-8 relative">
-          <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="px-4 py-2 bg-gray-200 rounded-md"
-          >
-            View
-          </button>
+        <div className="flex justify-between items-center w-full mx-8 relative">
+          <div className="relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-indigo-50 hover:border-indigo-500 hover:text-indigo-700 transition"
+            >
+              Layout
+            </button>
+
+            {dropdownOpen && (
+              <div className="absolute z-10 mt-2 w-48 bg-white border rounded-md shadow-md p-2">
+                {project.logs.map((log, i) => (
+                  <label
+                    key={i}
+                    className="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={visibleLogs[i]}
+                      onChange={() =>
+                        setVisibleLogs((prev) => {
+                          const newVis = [...prev];
+                          newVis[i] = !newVis[i];
+                          return newVis;
+                        })
+                      }
+                    />
+                    <span className="text-md text-gray-700">Log {i + 1}: {log.name}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
 
           <button
             onClick={handleBackHome}
-            className="px-4 mx-2 py-2 bg-gray-200 rounded-md"
+            className="px-4 py-2 bg-gray-200 rounded-md"
           >
             Home
           </button>
-
-          {dropdownOpen && (
-            <div className="absolute z-10 mt-2 w-48 bg-white border rounded-md shadow-md p-2">
-              {project.logs.map((log, i) => (
-                <label key={i} className="flex items-center gap-2 px-2 py-1 hover:bg-gray-100 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={visibleLogs[i]}
-                    onChange={() =>
-                      setVisibleLogs((prev) => {
-                        const newVis = [...prev];
-                        newVis[i] = !newVis[i];
-                        return newVis;
-                      })
-                    }
-                  />
-                  <span className="text-md text-gray-700">Log {i + 1}: {log.name}</span>
-                </label>
-              ))}
-            </div>
-          )}
         </div>
       </div>
 

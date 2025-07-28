@@ -3,15 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useProjectStore } from '@/hooks/useProjectStore';
 
 const NewProjectForm: React.FC = () => {
-  const [projectName, setProjectName] = useState('');
   const [modelsCount, setModelsCount] = useState(1);
   const { setProject } = useProjectStore();
   const navigate = useNavigate();
 
   const handleCreate = () => {
-    if (!projectName.trim()) return alert('Project name required');
     setProject({
-      name: projectName,
+      name: "",
       modelsCount,
       logs: Array(modelsCount).fill(null),
       endpoints: [{activity: window.location.protocol+"//"+window.location.hostname+":8081"+"/algo", structure: window.location.protocol+"//"+window.location.hostname+":8082"+"/algo", declare: window.location.protocol+"//"+window.location.hostname+":8083"+"/algo"}],
@@ -24,19 +22,6 @@ const NewProjectForm: React.FC = () => {
   return (
     <div className="flex-1 flex items-center justify-center">
       <div className="w-full max-w-md bg-gray-100 p-8 rounded-xl shadow">
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Project name
-          </label>
-          <input
-            type="text"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            placeholder="first_project, etc.."
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 bg-white"
-          />
-        </div>
-
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Number of event logs
